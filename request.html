@@ -1,0 +1,53 @@
+<html lang="en-us" ng-app="myApp">
+<head>
+     <title>CLOSS</title>
+   
+    <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.js"></script>
+    <script src="https://code.angularjs.org/1.5.8/angular-route.min.js"></script>
+   <script type="text/javascript" src="app.js"></script>
+    <link rel="stylesheet" type="text/css" href="common.css">
+    
+   
+    
+    
+    
+    </head>
+<body>
+
+
+<div id="request" class="container-fluid bg-grey" ng-controller="requestController">
+  <div class="row">
+    <div class="col-sm-8">
+      <h2>REQUEST</h2>
+       <form>
+    <div class="form-group">
+      <label for="lang">Language:</label>
+      <select class="form-control" id="lang" ng-model="request.language">
+        <option>Python</option>
+        <option>Java</option>
+      </select>
+      <br>
+         <label for="fw">Framework:</label>
+      <select class="form-control" id="fw" ng-model="request.framework">
+        <option>Play</option>
+        <option>Flask</option>
+        <option>Django</option>
+      </select>
+        <br>
+     <button class="btn btn-default btn-lg" ng-click="requestf()">REQUEST</button>
+    </div>
+  </form>
+    </div>
+    <div class="col-sm-4">
+      <span class="glyphicon glyphicon-edit logoright"></span>
+    </div>
+  </div>
+</div>  
+    
+    </body>
+    </html>
