@@ -1,7 +1,5 @@
 myApp.service('currentUser',["session", "$rootScope", function (session, $rootScope) {
 
-
-
     this.isLoggedIn = function () { return !!(session.auth_token()); } ;
 
     this.subDomain = '';

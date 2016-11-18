@@ -16,33 +16,52 @@ myApp.controller('registerController',['$scope','$http', function($scope,$http){
   console.log($scope.name);
   
   $scope.completeRegistration = function () {
+    console.log("dnjskhsjk");
     console.log($scope.registrationForm);
     
-    $http.post('http://127.0.0.1:8000/shark/registration', { newRule: $scope.registrationForm })
+    $http.post('http://127.0.0.1:8000/shark/registration', $scope.registrationForm )
     .success(function (result) {
       console.log("1");
       console.log(result);
-      
     })
     .error(function (data, status) {
       console.log("2");
       console.log(status);
       console.log(data);
-      
     });
   };
 }
 ]);
 
-myApp.controller('requestController',['$scope','$http', function($scope,$http){
-  $scope.name='jsn';
-  console.log($scope.name);
+myApp.controller('loginController',['$scope','$http','caching','$rootScope' ,function($scope,$http,caching,$rootScope){
   
+  $rootScope.man='';
+  $scope.loginf = function () {
+    $rootScope.man="fkjrjtjkrt";
+    $scope.man = caching.name;
+    $http.post('http://127.0.0.1:8000/shark/login', $scope.login).then(function (response) {
+      console.log(response.data.sessionId);
+      caching.set(response.data.sessionId);
+      var c = caching.get();
+      console.log(c);
+      console.log("he");
+      
+      
+      
+    });
+  };
+  
+}]);
+
+myApp.controller('requestController',['$scope','$http','caching','$rootScope' ,function($scope,$http,caching,$rootScope){
+  
+  var c = caching.get();
+  console.log(c);
   $scope.requestf = function () {
-    console.log($scope.request);
-    $scope.request.session_id = 'asndsjk';
-       console.log($scope.request);
-    $http.post('http://127.0.0.1:8000/shark/request', { data: $scope.request})
+    
+    console.log($rootScope.man);
+    console.log(caching.name);
+    $http.post('http://127.0.0.1:8000/shark/request',  $scope.request)
     .success(function (result) {
       console.log("1");
       console.log(result);
@@ -52,41 +71,26 @@ myApp.controller('requestController',['$scope','$http', function($scope,$http){
       console.log("2");
       console.log(status);
       console.log(data);
-      
     });
   };
-}
-]);
+}]);
 
-myApp.controller('loginController',['$scope','$http', '$q',function($scope,$http,$q){
-  $scope.name='jsn';
-    console.log("dsnfjksjkf");
-    $scope.session_id='';
-  console.log($scope.name);
-  $scope.login = '';
-  $scope.loginf = function () {
-    var result = $q.defer();
-    console.log("dsnfjksjkf");
-    var _this = this;
-    console.log($scope.login);
-    $http.post('http://127.0.0.1:8000/shark/login', {data: $scope.login}).then(function (data) {
+
+
+myApp.service('caching', function () {
+  var saveData = null;
+  
+  console.log("welcome");
+  
+  return {
+    get:function(){
+      console.log(saveData);
+      return saveData;
+    },
+    set:function(value){
+      saveData = value;
       
-      if(data.status) {
-        $scope.session_id = data.session_id;
-        
-      }
-      
-      
-      result.resolve(data);
-      
-    }, function () {
-      result.reject();
-    });
-    
-    return result.promise;
+    }
   };
-}
-
-
-
-]);
+  
+});

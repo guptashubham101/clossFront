@@ -24,11 +24,13 @@
   <div class="row">
     <div class="col-sm-8">
       <h2>REQUEST</h2>
+        {{man}}
        <form>
     <div class="form-group">
       <label for="lang">Language:</label>
       <select class="form-control" id="lang" ng-model="request.language">
         <option>Python</option>
+          
         <option>Java</option>
       </select>
       <br>
@@ -37,6 +39,7 @@
         <option>Play</option>
         <option>Flask</option>
         <option>Django</option>
+          
       </select>
         <br>
      <button class="btn btn-default btn-lg" ng-click="requestf()">REQUEST</button>
