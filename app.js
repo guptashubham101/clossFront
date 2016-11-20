@@ -22,7 +22,7 @@ myApp.controller('registerController', ['$scope', '$http', function ($scope, $ht
     console.log("dnjskhsjk");
     console.log($scope.registrationForm);
 
-    $http.post('http://127.0.0.1:8000/shark/registration', $scope.registrationForm)
+    $http.post('/shark/registration', $scope.registrationForm)
       .success(function (result) {
         console.log("1");
         console.log(result);
@@ -36,44 +36,31 @@ myApp.controller('registerController', ['$scope', '$http', function ($scope, $ht
 }
 ]);
 
-myApp.controller('loginController', ['$scope', '$http', 'caching', '$rootScope', function ($scope, $http, caching, $rootScope) {
+myApp.controller('loginController', ['$scope', '$http', function ($scope, $http) {
 
-  $rootScope.man = '';
+
   $scope.loginf = function () {
 
-    // here the session is set
-    localStorage.setItem('session','sessionId is here');
-
-
-    $rootScope.man = "fkjrjtjkrt";
-    $scope.man = caching.name;
-    $http.post('http://127.0.0.1:8000/shark/login', $scope.login).then(function (response) {
-      console.log(response.data.sessionId);
-      caching.set(response.data.sessionId);
-      var c = caching.get();
-      console.log(c);
-      console.log("he");
-
-
+    $http.post('/shark/login', $scope.login).then(function (response) {
+        console.log("1");
+        console.log(response);
+        localStorage.setItem('session',response.data.sessionId);
     });
   };
 
 }]);
 
-myApp.controller('requestController', ['$scope', '$http', 'caching', '$rootScope', function ($scope, $http, caching, $rootScope) {
+myApp.controller('requestController', ['$scope', '$http', function ($scope, $http) {
 
-  var c = caching.get();
-  console.log(c);
   $scope.requestf = function () {
 
-    // here the session is got
+    
     console.log(localStorage.getItem('session'));
+      
+      var sessionId = localStorage.getItem('session');
+        $scope.request.session_id = sessionId;
 
-
-
-    console.log($rootScope.man);
-    console.log(caching.name);
-    $http.post('http://127.0.0.1:8000/shark/request', $scope.request)
+    $http.post('/shark/request', $scope.request)
       .success(function (result) {
         console.log("1");
         console.log(result);
@@ -87,21 +74,3 @@ myApp.controller('requestController', ['$scope', '$http', 'caching', '$rootScope
   };
 }]);
 
-
-myApp.service('caching', function () {
-  var saveData = null;
-
-  console.log("welcome");
-
-  return {
-    get: function () {
-      console.log(saveData);
-      return saveData;
-    },
-    set: function (value) {
-      saveData = value;
-
-    }
-  };
-
-});
